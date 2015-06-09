@@ -15,7 +15,7 @@
 
 //Warning for the newbies
 if(!window.jQuery) {
-  alert("Could not find jQuery! The HTML must include jquery.js before opencpu.js!")
+  alert("Could not find jQuery! The HTML must include jquery.js before opencpu.js!");
 }
 
 (function ( $ ) {
@@ -30,6 +30,7 @@ if(!window.jQuery) {
   var ocpu = window.ocpu;
   ocpu.useAlerts = true;
   ocpu.enableLogging = true;
+  ocpu.connected = false;
 
   function log(msg) {
     if (ocpu.enableLogging && typeof console != "undefined") {
@@ -270,7 +271,7 @@ if(!window.jQuery) {
 
   $.fn.graphic = function(session, n){
     initplot(this).setlocation(session.getLoc(), n || "last");
-  }
+  };
   
   function initplot(targetdiv){
     if(targetdiv.data("ocpuplot")){
@@ -385,6 +386,7 @@ if(!window.jQuery) {
   function seturl(newpath){
     var message; // for error messages
     var deferredResult = $.Deferred();
+    ocpu.connected = false;
     if(!newpath.match("/R$")){
       message = "ERROR! Trying to set R url to: " + newpath + ". Path to an OpenCPU R package must end with '/R'";
       alert(message);
@@ -416,8 +418,10 @@ if(!window.jQuery) {
       }
 
       //we use trycatch because javascript will throw an error in case CORS is refused.
-      return $.get(r_path.href, function(resdata){
+      $.get(r_path.href, function(resdata){
         log("Path updated. Available objects/functions:\n" + resdata);
+        ocpu.connected = true;
+        deferredResult.resolve();
 
       }).fail(function(xhr, textStatus, errorThrown){
         message = "Connection to OpenCPU failed:\n" + textStatus + "\n" + xhr.responseText + "\n" + errorThrown;
