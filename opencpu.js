@@ -1,19 +1,10 @@
 /**
- * Javascript client library for OpenCPU
- * Version 0.4.4
- * Depends: jQuery
- * Requires HTML5 FormData support for file uploads
+ * Forked from:
  * http://github.com/jeroenooms/opencpu.js
- * 
- * Include this file in your apps and packages. 
- * You only need to use ocpu.seturl if this page is hosted outside of the OpenCPU package. For example:
  *
- * ocpu.seturl("../R") //default, use for apps
- * ocpu.seturl("//public.opencpu.org/ocpu/library/mypackage/R") //CORS
- * ocpu.seturl("/ocpu/library/mypackage/R") //hardcode path
+ * This file is modified from the original.
  */
 
-//Warning for the newbies
 if(!window.jQuery) {
   alert("Could not find jQuery! The HTML must include jquery.js before opencpu.js!");
 }
