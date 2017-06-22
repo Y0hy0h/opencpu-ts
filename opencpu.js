@@ -16,22 +16,20 @@
     var ocpu = window.ocpu;
     ocpu.connected = false;
 
-    function warn(msg) {
-        if (console !== undefined) {
-            console.log(msg);
-        }
+    function log(msg) {
+        console.log(msg)
     }
 
-    function alert(msg) {
-        if (ocpu.useAlerts) {
-            window.alert(msg);
-        } else {
-            console.error(msg)
-        }
+    function warn(msg) {
+        console.warn(msg);
+    }
+
+    function error(msg) {
+        console.error(msg)
     }
 
     if (!window.jQuery) {
-        alert("Could not find jQuery! The HTML must include jquery.js before opencpu.js!");
+        error("Could not find jQuery! The HTML must include jquery.js before opencpu.js!");
     }
 
     //new Session()
@@ -160,7 +158,7 @@
             }
             handler(new Session(loc, key, txt));
         }).fail(function () {
-            warn("OpenCPU error HTTP " + jqxhr.status + "\n" + jqxhr.responseText);
+            error("OpenCPU error HTTP " + jqxhr.status + "\n" + jqxhr.responseText);
         });
 
         //function chaining
@@ -234,7 +232,7 @@
             session.getObject(function (data) {
                 if (handler) handler(data);
             }).fail(function () {
-                warn("Failed to get JSON response for " + session.getLoc());
+                error("Failed to get JSON response for " + session.getLoc());
             });
         });
     }
@@ -368,7 +366,7 @@
 
     function testhtml5() {
         if (window.FormData === undefined) {
-            alert("Uploading of files requires HTML5. It looks like you are using an outdated browser that does not support this. Please install Firefox, Chrome or Internet Explorer 10+");
+            warn("Uploading of files requires HTML5. It looks like you are using an outdated browser that does not support this. Please install Firefox, Chrome or Internet Explorer 10+");
             throw "HTML5 required.";
         }
     }
@@ -380,7 +378,7 @@
         ocpu.connected = false;
         if (!newpath.match("/R$")) {
             message = "ERROR! Trying to set R url to: " + newpath + ". Path to an OpenCPU R package must end with '/R'";
-            alert(message);
+            error(message);
             deferredResult.reject({name: "Invalid OpenCPU url", message: message});
         } else {
             r_path = document.createElement('a');
@@ -391,32 +389,32 @@
                 r_cors = true;
                 if (!('withCredentials' in new XMLHttpRequest())) {
                     message = "This browser does not support CORS. Try using Firefox or Chrome.";
-                    alert(message);
+                    error(message);
                     deferredResult.reject({name: "No CORS support", message: message});
                 }
             }
 
             if (location.protocol == "https:" && r_path.protocol != "https:") {
                 message = "Page is hosted on HTTPS but using a (non-SSL) HTTP OpenCPU server. This is insecure and most browsers will not allow this.";
-                alert(message);
+                warn(message);
                 deferredResult.reject({name: "Using HTTP OpenCPU from HTTPS page", message: message});
             }
 
             if (r_cors) {
-                warn("Setting path to CORS server " + r_path.href);
+                log("Setting path to CORS server " + r_path.href);
             } else {
-                warn("Setting path to local (non-CORS) server " + r_path.href);
+                log("Setting path to local (non-CORS) server " + r_path.href);
             }
 
             //we use trycatch because javascript will throw an error in case CORS is refused.
             $.get(r_path.href, function (resdata) {
-                warn("Path updated. Available objects/functions:\n" + resdata);
+                log("Path updated. Available objects/functions:\n" + resdata);
                 ocpu.connected = true;
                 deferredResult.resolve();
 
             }).fail(function (xhr, textStatus, errorThrown) {
                 message = "Connection to OpenCPU failed:\n" + textStatus + "\n" + xhr.responseText + "\n" + errorThrown;
-                alert(message);
+                error(message);
                 deferredResult.reject({name: "OpenCPU connection failed", message: message});
             });
         }
@@ -431,13 +429,5 @@
     //exported constructors
     ocpu.Snippet = Snippet;
     ocpu.Upload = Upload;
-
-    //for innernetz exploder
-    if (typeof console == "undefined") {
-        this.console = {
-            log: function () {
-            }
-        };
-    }
 
 }(jQuery));
