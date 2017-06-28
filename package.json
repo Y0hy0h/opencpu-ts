@@ -1,0 +1,15 @@
+{
+  "name": "opencpu-js",
+  "version": "0.7.0",
+  "description": "A JavaScript library for OpenCPU",
+  "main": "opencpu.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Y0hy0h/opencpu.js.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Y0hy0h/opencpu.js/issues"
+  },
+  "homepage": "https://github.com/Y0hy0h/opencpu.js#readme"
+}

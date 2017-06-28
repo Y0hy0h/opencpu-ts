@@ -1,9 +1,0 @@
-{
-  "name": "opencpu",
-  "homepage": "https://www.opencpu.org/",
-  "description": "A JavaScript library for OpenCPU",
-  "main": "opencpu.js",
-  "dependencies": {
-    "jquery": "^3.2.1"
-  }
-}
