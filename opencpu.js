@@ -15,13 +15,18 @@
     window.ocpu = window.ocpu || {};
     var ocpu = window.ocpu;
     ocpu.connected = false;
+    ocpu.debugLog = false;
 
     function log(msg) {
-        console.log(msg)
+        if (ocpu.debugLog) {
+          console.log(msg)
+        }
     }
 
     function warn(msg) {
-        console.warn(msg);
+        if (ocpu.debugLog) {
+          console.warn(msg);
+        }
     }
 
     function error(msg) {
