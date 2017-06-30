@@ -1,6 +1,6 @@
 {
   "name": "opencpu-js",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A JavaScript library for OpenCPU",
   "main": "opencpu.js",
   "repository": {
