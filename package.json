@@ -16,9 +16,12 @@
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "jasmine": "^2.8.0",
+    "@types/jasmine": "^2.6.0",
+    "jasmine-core": "^2.8.0",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.0"
+    "karma-jasmine": "^1.1.0",
+    "karma-typescript": "^3.0.7",
+    "typescript": "^2.5.3"
   }
 }
