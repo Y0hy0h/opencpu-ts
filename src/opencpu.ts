@@ -1,17 +1,36 @@
 export class OpenCPU {
     private url: URL;
 
-    setUrl(url: string) {
+    async setUrl(url: string): Promise<URL> {
         const newUrl = new URL(url);
         const validOpenCpuPath = /\/ocpu\/library\/.+$/;
         const isValid = validOpenCpuPath.test(newUrl.pathname);
         if (!isValid) {
-            throw new InvalidUrlError(`The URL ${newUrl} is not a valid OpenCPU path.\n` +
-                `It should follow the form '/ocpu/library/packagename'.\n` +
-                `Valid example: 'https://cloud.opencpu.org/ocpu/library/stocks'.`)
+            throw new InvalidUrlError(newUrl.href);
         }
-        this.url = newUrl;
+        let response: Response = await fetch(newUrl.href);
+        if (response.ok) {
+            this.url = newUrl;
+            return this.url;
+        } else {
+            throw new UrlUnreachableError(newUrl.href, response.status);
+        }
+
     }
 }
 
-export class InvalidUrlError extends TypeError {}
+export class InvalidUrlError extends TypeError {
+    constructor(invalidUrl: string) {
+        const message = `The URL ${invalidUrl} is not a valid OpenCPU path.\n` +
+            `It should follow the form '/ocpu/library/packagename'.\n` +
+            `Valid example: 'https://cloud.opencpu.org/ocpu/library/stocks'.`;
+        super(message);
+    }
+}
+
+export class UrlUnreachableError extends URIError {
+    constructor(url: string, statusCode: number) {
+        const message = `Could not contact ${url}. Response code was ${statusCode}.`;
+        super(message);
+    }
+}
