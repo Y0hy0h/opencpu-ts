@@ -1,19 +1,14 @@
 {
-  "name": "opencpu-js",
-  "version": "0.7.1",
-  "description": "A JavaScript library for OpenCPU",
-  "main": "opencpu.js",
+  "name": "opencpu-ts",
+  "version": "0.1.0",
+  "description": "A TypeScript library for OpenCPU",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Y0hy0h/opencpu.js.git"
   },
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/Y0hy0h/opencpu.js/issues"
-  },
-  "homepage": "https://github.com/Y0hy0h/opencpu.js#readme",
-  "dependencies": {
-    "jquery": "^3.2.1"
+  "scripts": {
+    "test": "karma start --single-run"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
