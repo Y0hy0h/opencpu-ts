@@ -25,13 +25,18 @@ export class OpenCPU {
             method: 'POST',
             body: argsForm,
         });
-        return new Session();
+
+        const sessionId = response.headers.get(SESSION_ID_HEADER);
+        const responseText = await response.text();
+        return new Session(sessionId, responseText);
     }
 }
 
 export class Session {
-
+    constructor(public id: string, public responseText: string) {}
 }
+
+export const SESSION_ID_HEADER = 'X-ocpu-session';
 
 export class InvalidUrlError extends TypeError {
     constructor(invalidUrl: string) {

@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { OpenCPU } from './opencpu';
+import { OpenCPU, Session, SESSION_ID_HEADER } from './opencpu';
 
 describe('ocpu', () => {
     let opencpu: OpenCPU;
@@ -85,6 +85,32 @@ describe('ocpu', () => {
                 .then(() => {
                     const callArgs = fetchMock.lastCall(matchedUrl);
                     expect(callArgs[1]).toEqual(jasmine.objectContaining({body: argsForm,},));
+                })
+                .then(done);
+        });
+
+        it('#call should return `Session` object', (done) => {
+            const functionName = 'function';
+            const args = {first: 'hello'};
+
+            const responseText = 'all went well';
+            const sessionId = 'x0b3644466a';
+            const headers = new Headers();
+            headers.append(SESSION_ID_HEADER, sessionId);
+
+            const matchedUrl = packageUrl + '/R/' + 'function';
+            fetchMock.mock(matchedUrl, {
+                body: responseText,
+                headers: headers,
+            });
+
+            const argsForm = new FormData();
+            Object.keys(args).forEach(key => argsForm.append(key, args[key]));
+
+            opencpu.call(functionName, args)
+                .then((session) => {
+                    const expectedSession = new Session(sessionId, responseText);
+                    expect(session).toEqual(expectedSession);
                 })
                 .then(done);
         });
