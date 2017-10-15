@@ -4,7 +4,9 @@ import { itAsyncCases } from './jasmineCases';
 
 describe('Session', () => {
     const location = 'opencpu.com/ocpu/tmp/x0b3644466a';
+    let session: Session;
     beforeEach(() => {
+        session = new Session(location, 'testResponse');
         fetchMock.catch((url) => fail(`${url} was not matched.`))
     });
 
@@ -18,7 +20,6 @@ describe('Session', () => {
             body: returnObject,
         });
 
-        const session = new Session(location, 'testResponse');
         session.getObject()
             .then(object => expect(object).toEqual(returnObject))
     });
@@ -27,7 +28,6 @@ describe('Session', () => {
         const expectedResponse = new Response('returnMe');
         fetchMock.get(location + '/' + resource, expectedResponse);
 
-        const session = new Session(location, 'testResponse');
         session.get(resource)
             .then(response => expect(response).toEqual(expectedResponse))
             .then(done, done);
