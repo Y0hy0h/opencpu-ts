@@ -4,7 +4,7 @@
   "description": "A TypeScript library for OpenCPU",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Y0hy0h/opencpu.js.git"
+    "url": "git+https://github.com/Y0hy0h/opencpu.ts.git"
   },
   "license": "Apache-2.0",
   "scripts": {
