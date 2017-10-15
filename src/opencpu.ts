@@ -1,3 +1,5 @@
+import { Session } from './session';
+
 export class OpenCPU {
     private url: URL;
 
@@ -26,17 +28,13 @@ export class OpenCPU {
             body: argsForm,
         });
 
-        const sessionId = response.headers.get(SESSION_ID_HEADER);
+        const location = response.headers.get(SESSION_LOCATION);
         const responseText = await response.text();
-        return new Session(sessionId, responseText);
+        return new Session(location, responseText);
     }
 }
 
-export class Session {
-    constructor(public id: string, public responseText: string) {}
-}
-
-export const SESSION_ID_HEADER = 'X-ocpu-session';
+export const SESSION_LOCATION = 'Location';
 
 export class InvalidUrlError extends TypeError {
     constructor(invalidUrl: string) {

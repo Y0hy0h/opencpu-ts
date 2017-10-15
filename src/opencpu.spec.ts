@@ -1,5 +1,6 @@
 import fetchMock from 'fetch-mock';
-import { OpenCPU, Session, SESSION_ID_HEADER } from './opencpu';
+import { OpenCPU, SESSION_LOCATION } from './opencpu';
+import { Session } from './session';
 
 describe('ocpu', () => {
     let opencpu: OpenCPU;
@@ -62,7 +63,8 @@ describe('ocpu', () => {
     });
 
     describe('with url set', () => {
-        const packageUrl = 'https://opencpu.com/ocpu/library/package';
+        const baseUrl = 'https://opencpu.com/ocpu';
+        const packageUrl = baseUrl + '/library/package';
         beforeEach((done) => {
             fetchMock.mock(packageUrl, 200);
 
@@ -94,10 +96,11 @@ describe('ocpu', () => {
             const args = {first: 'hello'};
 
             const responseText = 'all went well';
-            const sessionId = 'x0b3644466a';
-            const headers = new Headers();
-            headers.append(SESSION_ID_HEADER, sessionId);
+            const sessionLocation = baseUrl + '/tmp/x0b3644466a';
+            const expectedSession = new Session(sessionLocation, responseText);
 
+            const headers = new Headers();
+            headers.append(SESSION_LOCATION, sessionLocation);
             const matchedUrl = packageUrl + '/R/' + 'function';
             fetchMock.mock(matchedUrl, {
                 body: responseText,
@@ -109,22 +112,12 @@ describe('ocpu', () => {
 
             opencpu.call(functionName, args)
                 .then((session) => {
-                    const expectedSession = new Session(sessionId, responseText);
                     expect(session).toEqual(expectedSession);
                 })
                 .then(done);
         });
     });
 });
-
-function itCases(expectation: string, assertion, argList: Array<Array<any>>) {
-    const itCall = (args) => {
-        it.bind(args.join(' | '), () => {
-            assertion.apply(this, args);
-        });
-    };
-    unwrapArgList(expectation, argList, itCall);
-}
 
 function itAsyncCases(expectation: string, assertion, argList: Array<Array<any>>) {
     const itCall = (args) => {
