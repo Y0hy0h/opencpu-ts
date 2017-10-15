@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { OpenCPU, SESSION_LOCATION } from './opencpu';
+import { OpenCPU, SESSION_LOCATION, RError } from './opencpu';
 import { Session } from './session';
 import { itAsyncCases } from './jasmineCases';
 
@@ -7,7 +7,7 @@ describe('OpenCPU', () => {
     let opencpu: OpenCPU;
     beforeEach(() => {
         opencpu = new OpenCPU();
-        fetchMock.catch((url) => fail(`${url} was not matched.`))
+        fetchMock.catch((url) => fail(`${url} was not matched.`));
     });
 
     afterEach(() => {
@@ -102,7 +102,7 @@ describe('OpenCPU', () => {
 
             const headers = new Headers();
             headers.append(SESSION_LOCATION, sessionLocation);
-            const matchedUrl = packageUrl + '/R/' + 'function';
+            const matchedUrl = packageUrl + '/R/' + functionName;
             fetchMock.mock(matchedUrl, {
                 body: responseText,
                 headers: headers,
@@ -117,5 +117,23 @@ describe('OpenCPU', () => {
                 })
                 .then(done);
         });
+
+        it('#call should fail if response code is not ok', (done) => {
+            const errorMessage = 'R error';
+            const functionName = 'function';
+
+            const matchedUrl = packageUrl + '/R/' + functionName;
+            fetchMock.post(matchedUrl, {
+                status: 400,
+                body: errorMessage,
+            });
+
+            const expectedError = new RError(errorMessage);
+            opencpu.call(functionName, {})
+                .then(fail)
+                .catch(error => expect(error).toEqual(expectedError))
+                .then(done);
+        });
+
     });
 });

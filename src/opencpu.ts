@@ -27,6 +27,10 @@ export class OpenCPU {
             method: 'POST',
             body: argsForm,
         });
+        if (response.status == 400) {
+            const errorMessage = await response.text();
+            throw new RError(errorMessage);
+        }
 
         const location = response.headers.get(SESSION_LOCATION);
         const responseText = await response.text();
@@ -51,3 +55,5 @@ export class UrlUnreachableError extends URIError {
         super(message);
     }
 }
+
+export class RError extends EvalError {}
