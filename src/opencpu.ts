@@ -17,6 +17,18 @@ export class OpenCPU {
         }
 
     }
+
+    async call(functionName: string, args: object): Promise<Session> {
+        const response = await fetch(this.url + '/R/' + functionName, {
+            method: 'POST',
+            body: args,
+        });
+        return new Session();
+    }
+}
+
+export class Session {
+
 }
 
 export class InvalidUrlError extends TypeError {

@@ -59,6 +59,31 @@ describe('ocpu', () => {
                 .then(done);
         });
     });
+
+    describe('with url set', () => {
+        const packageUrl = 'https://opencpu.com/ocpu/library/package';
+        beforeEach((done) => {
+            fetchMock.mock(packageUrl, 200);
+
+            opencpu.setUrl(packageUrl)
+                .catch(error => fail(error))
+                .then(done);
+        });
+
+        it('#call should make a post request to the correct function', (done) => {
+            const matchedUrl = packageUrl + "/R/function";
+            fetchMock.mock(matchedUrl, 200);
+
+            const functionName = 'function';
+            const args = {first: 'hello'};
+            opencpu.call(functionName, args)
+                .then(() => {
+                    const callArgs = fetchMock.lastCall(matchedUrl);
+                    expect(callArgs[1]).toEqual(jasmine.objectContaining({body: args}));
+                })
+                .then(done, done);
+        });
+    });
 });
 
 function itCases(expectation: string, assertion, argList: Array<Array<any>>) {
