@@ -19,9 +19,11 @@ export class OpenCPU {
     }
 
     async call(functionName: string, args: object): Promise<Session> {
+        const argsForm = new FormData();
+        Object.keys(args).forEach(key => argsForm.append(key, args[key]));
         const response = await fetch(this.url + '/R/' + functionName, {
             method: 'POST',
-            body: args,
+            body: argsForm,
         });
         return new Session();
     }

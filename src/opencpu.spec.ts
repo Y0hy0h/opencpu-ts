@@ -74,15 +74,19 @@ describe('ocpu', () => {
         it('#call should make a post request to the correct function', (done) => {
             const functionName = 'function';
             const args = {first: 'hello'};
+
             const matchedUrl = packageUrl + '/R/' + 'function';
             fetchMock.mock(matchedUrl, 200);
+
+            const argsForm = new FormData();
+            Object.keys(args).forEach(key => argsForm.append(key, args[key]));
 
             opencpu.call(functionName, args)
                 .then(() => {
                     const callArgs = fetchMock.lastCall(matchedUrl);
-                    expect(callArgs[1]).toEqual(jasmine.objectContaining({body: args}));
+                    expect(callArgs[1]).toEqual(jasmine.objectContaining({body: argsForm,},));
                 })
-                .then(done, done);
+                .then(done);
         });
     });
 });
