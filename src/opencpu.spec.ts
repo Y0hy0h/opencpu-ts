@@ -5,6 +5,7 @@ describe('ocpu', () => {
     let opencpu: OpenCPU;
     beforeEach(() => {
         opencpu = new OpenCPU();
+        fetchMock.catch((url) => fail(`${url} was not matched.`))
     });
 
     afterEach(() => {
@@ -71,11 +72,11 @@ describe('ocpu', () => {
         });
 
         it('#call should make a post request to the correct function', (done) => {
-            const matchedUrl = packageUrl + "/R/function";
-            fetchMock.mock(matchedUrl, 200);
-
             const functionName = 'function';
             const args = {first: 'hello'};
+            const matchedUrl = packageUrl + '/R/' + 'function';
+            fetchMock.mock(matchedUrl, 200);
+
             opencpu.call(functionName, args)
                 .then(() => {
                     const callArgs = fetchMock.lastCall(matchedUrl);
