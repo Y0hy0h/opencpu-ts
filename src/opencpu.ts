@@ -21,8 +21,7 @@ export class OpenCPU {
     }
 
     async call(functionName: string, args: object): Promise<Session> {
-        const argsForm = new FormData();
-        Object.keys(args).forEach(key => argsForm.append(key, args[key]));
+        const argsForm = OpenCPU.constructForm(args);
         const response = await fetch(this.url + '/R/' + functionName, {
             method: 'POST',
             body: argsForm,
@@ -36,6 +35,25 @@ export class OpenCPU {
         const responseText = await response.text();
         return new Session(location, responseText);
     }
+
+    private static constructForm(args: object): FormData {
+        const argsForm = new FormData();
+        for (const key in args) {
+            let value = args[key];
+            if (value instanceof File) { } // Files should be kept as Files
+            else if (value instanceof CodeSnippet) value = value.code;
+            else value = JSON.stringify(args[key]);
+
+            argsForm.append(key, value);
+        }
+        return argsForm;
+    }
+}
+
+export class CodeSnippet {
+    constructor(
+        public code: string,
+    ) {}
 }
 
 export const SESSION_LOCATION = 'Location';

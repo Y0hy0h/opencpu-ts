@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
-import { OpenCPU, SESSION_LOCATION, RError } from './opencpu';
-import { Session } from './session';
 import { itAsyncCases } from './jasmineCases';
+import { CodeSnippet, OpenCPU, RError, SESSION_LOCATION } from './opencpu';
+import { Session } from './session';
 
 describe('OpenCPU', () => {
     let opencpu: OpenCPU;
@@ -103,7 +103,7 @@ describe('OpenCPU', () => {
             const headers = new Headers();
             headers.append(SESSION_LOCATION, sessionLocation);
             const matchedUrl = packageUrl + '/R/' + functionName;
-            fetchMock.mock(matchedUrl, {
+            fetchMock.post(matchedUrl, {
                 body: responseText,
                 headers: headers,
             });
@@ -135,5 +135,27 @@ describe('OpenCPU', () => {
                 .then(done);
         });
 
+        itAsyncCases('#call should correctly stringify args', (args, expectedString, done) => {
+            const functionName = 'function';
+            const matchedUrl = packageUrl + '/R/' + functionName;
+            fetchMock.post(matchedUrl, 200);
+
+            opencpu.call(functionName, args)
+                .then(() => {
+                    const callArgs = fetchMock.lastCall(matchedUrl);
+                    const actualForm = callArgs[1].body;
+                    for (const key in args) {
+                        if (args.hasOwnProperty(key)) {
+                            expect(actualForm.get(key)).toEqual(expectedString);
+                        }
+                    }
+                })
+                .then(done);
+        }, [
+            [{arg: []}, JSON.stringify([])],
+            [{arg: new File(['tmp'], 'tmp.txt')}, new File(['tmp'], 'tmp.txt')],
+            [{arg: 'string'}, JSON.stringify('string')],
+            [{arg: new CodeSnippet('some code')}, 'some code'],
+        ]);
     });
 });
