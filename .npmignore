@@ -1,6 +1,4 @@
-src/
 specs/
 
-tsconfig.json
 .travis.yml
 karma.conf.js
