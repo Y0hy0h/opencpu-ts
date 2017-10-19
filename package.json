@@ -12,7 +12,7 @@
   "scripts": {
     "test": "karma start --single-run",
     "tsc": "tsc",
-    "prepublish": "node run tsc"
+    "prepublish": "npm run tsc"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
