@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 import { itAsyncCases } from './jasmineCases';
-import { CodeSnippet, OpenCPU, RError, SESSION_LOCATION } from './opencpu';
-import { Session } from './session';
+import { CodeSnippet, OpenCPU, RError, SESSION_LOCATION } from '../src/opencpu';
+import { Session } from '../src/session';
 
 describe('OpenCPU', () => {
     let opencpu: OpenCPU;

@@ -7,8 +7,12 @@
     "url": "git+https://github.com/Y0hy0h/opencpu.ts.git"
   },
   "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "tsc": "tsc",
+    "prepublish": "node run tsc"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",

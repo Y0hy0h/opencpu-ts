@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { Session } from './session';
+import { Session } from '../src/session';
 import { itAsyncCases } from './jasmineCases';
 
 describe('Session', () => {
