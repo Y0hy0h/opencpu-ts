@@ -11,8 +11,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "karma start --single-run",
-    "tsc": "tsc",
-    "prepublish": "npm run tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
