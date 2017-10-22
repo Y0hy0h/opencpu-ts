@@ -1,29 +1,35 @@
-Javascript library for OpenCPU
-==============================
+# TypeScript library for OpenCPU
+Forked from https://github.com/NextCenturyCorporation/opencpu.js
+to make use of ES6 and TypeScript.
 
-opencpu.js is a Javascript client library for OpenCPU (www.opencpu.org). It is a foundation for developing OpenCPU apps: R packages containing a web application that calling R functions though the OpenCPU API. 
+## Installation
+`npm install y0hy0h/opencpu.ts`
 
-
-A note about hotlinking
------------------------
-
-It is better not to hotlink the javascript library straight from github. The library is under active development and the latest version on Github changes rigorously from time to time. If you build apps, please include a copy of `jQuery` and `opencpu.js` in the package. For cross domain applications, you can use:
-
-	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script> 
-    <script src="//www.opencpu.org/js/archive/opencpu-0.4.js"></script>
-
-This file will not have any breaking changes. Also note that by not specifying `http` or `https`, the browser will  automatically use the same protocol as is used to host the webpage, which prevents "mixed content" security problems.
-
-
-Documentation
--------------
-
-The documentation for this library is now available on the OpenCPU website: https://www.opencpu.org/jslib.html
-
-
-Apps
-----
-
-Example apps that use `opencpu.js` can be found on the OpenCPU website: https://www.opencpu.org/apps.html
-
+## Usage
+<table>
+    <tr>
+        <td><code>import { OpenCPU } from 'opencpu-ts'</code></td>
+        <td>Import the library</td>
+    </tr>
+    <tr>
+        <td><code>const opencpu = new OpenCPU()</code></td>
+        <td>Instantiate a new object</td>
+    </tr>
+    <tr>
+        <td><code>await opencpu.setUrl('https://cloud.opencpu.org/ocpu/library/MASS/')</code></td>
+        <td>Set the URL to the <code>base</code> package on the public server</td>
+   </tr>
+   <tr>
+        <td><code>const session = await opencpu.call('print', {x: [1,2,3]})</code></td>
+        <td>Call <code>print(x=list(1,2,3))</code></td>
+   </tr>
+   <tr>
+        <td><code>const returnValue = await session.getObject()</code></td>
+        <td>Get the return value (note that <code>print</code> also returns the value)</td>
+   </tr>
+   <tr>
+        <td><code>const consoleOutput = await session.get('stdout').then(response => response.text()</code></td>
+        <td>Read the console output</td>
+   </tr>
+</table>
 

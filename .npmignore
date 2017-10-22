@@ -1,0 +1,4 @@
+specs/
+
+.travis.yml
+karma.conf.js

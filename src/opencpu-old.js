@@ -34,7 +34,7 @@
     }
 
     if (!window.jQuery) {
-        error("Could not find jQuery! The HTML must include jquery.js before opencpu.js!");
+        error("Could not find jQuery! The HTML must include jquery.js before opencpu-old.js!");
     }
 
     //new Session()
