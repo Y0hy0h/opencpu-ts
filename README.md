@@ -28,7 +28,7 @@ to make use of ES6 and TypeScript.
         <td>Get the return value (note that <code>print</code> also returns the value)</td>
    </tr>
    <tr>
-        <td><code>const consoleOutput = await session.get('stdout').then(response => response.text()</code></td>
+        <td><code>const consoleOutput = await session.get('stdout').then(response => response.text())</code></td>
         <td>Read the console output</td>
    </tr>
 </table>
