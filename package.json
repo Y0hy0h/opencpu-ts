@@ -1,12 +1,19 @@
 {
   "name": "opencpu-ts",
   "version": "0.1.0",
-  "description": "A TypeScript library for OpenCPU",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Y0hy0h/opencpu.ts.git"
+  "description": "TypeScript library for OpenCPU",
+  "keywords": [
+    "OpenCPU",
+    "TypeScript"
+  ],
+  "bugs": {
+    "url": "https://github.com/Y0hy0h/opencpu-ts/issues"
   },
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Y0hy0h/opencpu-ts.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
