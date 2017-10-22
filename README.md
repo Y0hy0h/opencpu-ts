@@ -3,7 +3,7 @@ Forked from https://github.com/NextCenturyCorporation/opencpu.js
 to make use of ES6 and TypeScript.
 
 ## Installation
-`npm install y0hy0h/opencpu-ts`
+`npm install --save y0hy0h/opencpu-ts`
 
 ## Usage
 <table>
