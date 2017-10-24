@@ -1,6 +1,5 @@
 [![npm version](https://badge.fury.io/js/opencpu-ts.svg)](https://badge.fury.io/js/opencpu-ts)
-[![Build Status](https://travis-ci.org/Y0hy0h/opencpu.ts.svg?branch=master)](https://travis-ci.org/Y0hy0h/opencpu.ts)
-
+[![Build Status](https://travis-ci.org/Y0hy0h/opencpu-ts.svg?branch=master)](https://travis-ci.org/Y0hy0h/opencpu-ts)
 # TypeScript library for OpenCPU
 Forked from https://github.com/NextCenturyCorporation/opencpu.js
 to make use of ES6 and TypeScript.
