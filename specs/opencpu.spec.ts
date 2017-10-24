@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { itAsyncCases } from './jasmineCases';
+import { itAsyncCases } from '../../jasmineCases/jasmineCases';
 import { CodeSnippet, OpenCPU, RError, SESSION_LOCATION } from '../src/opencpu';
 import { Session } from '../src/session';
 
