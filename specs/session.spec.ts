@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 import { Session } from '../src/session';
-import { itAsyncCases } from '../../jasmineCases/jasmineCases';
+import { itAsyncCases } from 'jasmine-cases';
 
 describe('Session', () => {
     const location = 'opencpu.com/ocpu/tmp/x0b3644466a';
